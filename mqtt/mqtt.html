@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>MQTT Data - Real Time</title>
+<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<style>
+    canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+</style>
+</head>
+<body>
+    <div style="width:75%;">
+        <canvas id="canvas"></canvas>
+    </div>
+<script>
+        window.chartColors = {
+         red: 'rgb(255, 99, 132)',
+         orange: 'rgb(255, 159, 64)',
+         yellow: 'rgb(255, 205, 86)',
+         green: 'rgb(75, 192, 192)',
+         blue: 'rgb(54, 162, 235)',
+         purple: 'rgb(153, 102, 255)',
+         grey: 'rgb(231,233,237)'
+        };
+        var count = 0;
+        var TIMES = [" "];
+        var config = {
+            type: 'line',
+            data: {
+                labels: [" "],
+                datasets: [{
+                    label: "temperature",
+                    backgroundColor: window.chartColors.red,
+                    borderColor: window.chartColors.red,
+                    data: [0],
+                    fill: false,
+                }, {
+                    label: "humidity",
+                    fill: false,
+                    backgroundColor: window.chartColors.blue,
+                    borderColor: window.chartColors.blue,
+                    data: [0],
+                }]
+            },
+            options: {
+                scaleSteps : 10,
+                scaleOverride : true,
+                scaleStepWidth : 10,
+                scaleStartValue : 0,
+                responsive: true,
+                title:{
+                    display:true,
+                    text:'Chart.js Line Chart'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Time'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+            }
+        };
+
+    var socket = io.connect('xxx.xxx.xxx.xxx:5000');
+    socket.on('connect', function () {
+    socket.on('mqtt', function (msg) {
+    console.log(msg.topic+' '+msg.payload);
+
+    var strArray = msg.payload.split('^');
+    var temp = strArray[0];
+    var humid = strArray[1];
+    var time = strArray[2];
+  
+    count++;
+    if(count > 10)
+    {
+      config.data.labels.shift();
+      config.data.datasets[0].data.shift();
+      config.data.datasets[1].data.shift();
+      count = 11;
+    }
+    config.data.labels.push(time);
+    config.data.datasets[0].data.push(temp);
+    config.data.datasets[1].data.push(humid);
+
+    window.myLine.update();
+  
+    });
+    socket.emit('subscribe',{topic:'myhome/sensor'});
+    });
+
+    window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myLine = new Chart(ctx, config);
+    };
+
+    </script>
+ </body>
+</html>

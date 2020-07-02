@@ -1,0 +1,21 @@
+<html>
+    <head>
+	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  
+    </head>
+    <body>
+        <button id="my-btn">My Button</button> 
+        <script type="text/javascript">
+            console.log('it\'s work');
+            $('#my-btn').on('mouseover', function (event) {
+                $('#my-btn').css('color', '#ee6633')
+            });
+            $('#my-btn').on('mouseout', function (event) {
+                $('#my-btn').css('color', '#333')
+            });    
+            $('#my-btn').on('mousedown', function (event) {
+                $('#my-btn').css('color', '#33e')
+            });
+        </script>
+    </body>
+<html>

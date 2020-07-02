@@ -16,7 +16,8 @@ plus(3, 5);
 
 function outerFunc() {
     var outerVer = 'a';
-    function innerFunc(){
+
+    function innerFunc() {
         var innerVar = 'b';
         console.log(outerVer);
         console.log(innerVar);
@@ -44,13 +45,13 @@ innerFunc(); // Nope
 
 // 함수 조차 이와 같은 객체로 취급 
 
-var plusFunc = function (a, b){
-    return a + b;
-} // 익명함수로  plusFunc 변수에 대입
+var plusFunc = function(a, b) {
+        return a + b;
+    } // 익명함수로  plusFunc 변수에 대입
 
 plusFunc(3, 5);
 
-function a(x){
+function a(x) {
     var b = function(y) {
         return x + y;
     };
@@ -60,35 +61,35 @@ function a(x){
 a(3)(4); // 7
 
 var jacob = {
-    'age' : 18,
-    'run' : function(){
+    'age': 18,
+    'run': function() {
         alert('Jacob is running');
     },
-    'sleep' : function(){
+    'sleep': function() {
         alert('jacob sleeps');
     },
 };
 
 // 즉시 실행 함수 
 // 함수의 클로저 개념과 first-class object 개념을 이용하며 비슷한 효과 ok
-(function(){
+(function() {
     var a = 10;
     var b = 20;
-    console.log(a+b);    // 30
+    console.log(a + b); // 30
 })();
 
 console.log(a); // undifined
 
-var tempFunction =(function(){
+var tempFunction = (function() {
     var a = 10;
     var b = 20;
-    console.log(a+b);    // 30
+    console.log(a + b); // 30
 });
 
 tempFunction() // 동일
 
 // 요론식으로도 사용 가능 
-(function (b) {
-	b.getElementById('content');
+(function(b) {
+    b.getElementById('content');
 
 })(document.body);

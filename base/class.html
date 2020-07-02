@@ -1,0 +1,27 @@
+<html>
+<head>
+	<script type="text/javascript">
+		var RandUtil = (function() {
+			return function (posVal, negVal, probability) {
+				this.posVal = posVal;
+				this.negVal = negVal;
+				this.probability = probability;
+
+				this.getRandVar = function() {
+					if (Math.random() > probability)
+						return this.posVal;
+					else
+						return this.negVal;
+				};
+			};
+		})();
+		function sampleEvent(){
+			var randUtil = new RandUtil("당첨", "꽝", 0.5);
+			alert( randUtil.getRandVar() );
+		}
+	</script>
+</head>
+<body>
+	<button onclick="sampleEvent()">복권</button>
+</body>
+</html>

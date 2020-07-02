@@ -1,0 +1,15 @@
+<select id="selector">
+    <option></option>
+    <option></option>
+    <option></option>
+</select>
+
+<script type="text/javascript">
+    var mySelector = document.getElementById('selector');
+    var mOptions = mySelector.getElementsByTagName('option');
+
+    for (var i in mOptions)
+        mOptions[i].innerHTML = Math.round(Math.random()*10000);
+</script>
+
+
